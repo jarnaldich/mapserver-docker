@@ -1,0 +1,128 @@
+# vim: ts=4:sw=4:noet
+MAP
+NAME of25c
+
+# TODO: arxiu epsg, filtrar només els EPSGS que s'using
+# - mira GRD per a canvi ED50 ... web icgc (Víctor)
+# - mira paràmetre DEBUG per a veure quina info va al LOG
+
+CONFIG "PROJ_LIB" '/usr/share/proj/'
+CONFIG "MS_ERRORFILE" '/var/log/of25c.log'
+DEBUG 2
+
+STATUS ON
+EXTENT 263747.00 4484436.00  527495.0 4748184.0
+
+#Unitats del mapa
+UNITS METERS 
+MAXSIZE 4096
+SHAPEPATH "/dades/of25c"
+
+#Format de sortida de la imatge
+OUTPUTFORMAT
+  NAME "png8"
+  DRIVER AGG/PNG8
+  MIMETYPE "image/png"
+  IMAGEMODE RGBA
+  EXTENSION "png"
+  FORMATOPTION "QUANTIZE_FORCE=on"
+  FORMATOPTION "QUANTIZE_COLORS=256"
+  FORMATOPTION "GAMMA=0.75"
+END
+
+OUTPUTFORMAT
+  NAME "jpeg"
+  DRIVER AGG/JPEG
+  MIMETYPE "image/jpeg"
+  IMAGEMODE RGB
+  EXTENSION "jpg"
+  FORMATOPTION "GAMMA=0.75"
+  FORMATOPTION "QUALITY=95"
+END
+
+#Projecció en coordenades geogràfiques
+PROJECTION
+	"init=epsg:25831"
+END
+
+#Definició de las  capacitats 
+WEB
+IMAGEPATH "/dades/html/tmp/"
+IMAGEURL "/tmp/"
+EMPTY ""
+ METADATA
+      OWS_TITLE "of25c"
+	  OWS_ABSTRACT "ICGC_FILE2GEOSERVICE"
+      OWS_ENABLE_REQUEST   "*"      
+      OWS_FEATURE_INFO_MIME_TYPE  "text/html"
+      OWS_ONLINERESOURCE "http://172.17.50.102/cgi-bin/mapserv?map=/dades/of25c/of25c.map&"    
+      OWS_SRS "EPSG:23031 EPSG:4326  EPSG:25831 EPSG:4258 EPSG:4230 EPSG:3857 EPSG:32631"
+      OWS_EXTENT                       "263747.60 4484436.53  527495.20 4748184.13"
+      OWS_ACCESSCONTRAINTS             "NONE"
+      OWS_ADDRESSTYPE                  "MAILING ADDRESS"    
+      OWS_CITY                         "Barcelona"
+      OWS_STATEORPROVINCE              "Barcelona"    
+      OWS_CONTACTELECTRONICMAILADDRESS ""    
+      OWS_CONTACTPERSON                ""
+      OWS_CONTACTORGANIZATION          "Institut Cartogràfic i Geològic de Catalunya"    
+      OWS_FEES                         "http://www.icgc.cat"          
+      OWS_ADDRESS                      "Parc de Montjuic sn"     
+      OWS_POSTCODE                     "08038"
+      OWS_COUNTRY                      "Spain"
+      OWS_CONTACTPOSITION              "" 
+      OWS_ACCESSCONSTRAINTS            "none"
+      OWS_CONTACTVOICETELEPHONE        ""
+      OWS_SERVICE_ONLINERESOURCE       ""
+	  OWS_ROLE                         "Provider"
+      OWS_KEYWORDLIST                  "Catalunya,servei,Mapa"
+      OWS_CONTACTFACSIMILETELEPHONE    ""
+      OWS_HOURSOFSERVICE               ""
+      OWS_CONTACTINSTRUCTIONS          ""
+      OWS_ATTRIBUTION_ONLINERESOURCE   "http://www.icgc.cat"
+      OWS_ATTRIBUTION_TITLE            "ICGC"
+      OWS_BBOX_EXTENDED                "True"     
+      OWS_HTTP_MAX_AGE "3600"
+      LABELCACHE_MAP_EDGE_BUFFER "10"
+      OWS_SLD_ENABLED "true"
+  END
+END
+
+#GeoTifF amb capçalera y world file
+LAYER
+    NAME "of25c_25K"
+    GROUP "of25c"
+    STATUS ON
+    TYPE RASTER 
+    TILEINDEX "tileindex_ovr.shp"
+#    PROCESSING "RESAMPLE=AVERAGE"
+    TILEITEM "location"
+    MINSCALEDENOM 36112
+    OFFSITE 0 0 0
+	METADATA
+		OWS_SRS             "EPSG:23031 EPSG:4326 EPSG:25831 EPSG:4258 EPSG:4230 EPSG:3857 EPSG:32631"
+		OWS_NAME            "of25c"
+		OWS_EXTENT          "263747.00 4484436.00  527495.0 4748184.00"
+		OWS_TITLE	    "of25c"
+	END
+END 
+
+LAYER
+    NAME "of25c_5K"
+    GROUP "of25c"
+    STATUS ON
+    TYPE RASTER 
+    TILEINDEX "tileindex_full.shp"
+#    PROCESSING "RESAMPLE=AVERAGE"
+    TILEITEM "location"
+    MAXSCALEDENOM 36112
+    OFFSITE 0 0 0
+	METADATA
+		OWS_SRS             "EPSG:23031 EPSG:4326 EPSG:25831 EPSG:4258 EPSG:4230 EPSG:3857 EPSG:32631"
+		OWS_NAME            "of25c"
+		OWS_EXTENT          "263747.00 4484436.00  527495.0 4748184.00"
+		OWS_TITLE	    "of25c"
+	END
+END 
+
+
+END
